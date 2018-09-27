@@ -1,5 +1,5 @@
 <style>
-h2{ color: orange; background: #232323; text-align: center;}
+h2{ color: orange; background: #232323; text-align: center; padding: 5px;}
 </style>
 
 <?php
@@ -704,12 +704,14 @@ foreach($tab as $indice => $valeur){ // quand il y a 2 variable après "as", la 
     echo $indice . ' correspond à ' . $valeur . '<br>';
 }
 
-// Exercice : écrivez un array associatif avec les indices prenom, nom, et telephone, et mettez y des information pour un seule personne. puis avec loop foreach, affichez les valeurs dans des <p>, sauf pour le prenom qui doit être dans un <h3>.
+// Exercice : écrivez un array associatif avec les indices prenom, nom, email et telephone, et mettez y des information pour un seule personne. puis avec loop foreach, affichez les valeurs dans des <p>, sauf pour le prenom qui doit être dans un <h3>.
 
 $table = array(
     'prenom' => 'Sabuj',
     'nom' => 'BARUA',
-    'tel' => '0123456789'
+    'email' => 'sabuj@gmail.com',
+    'tel' => '0123456789',
+    'image' => '2012277-168X210.jpg'
 );
 //$table is the table------$user is index(prenom, nom, tel)------$users is the value(sabuj, barua, 0123456)
 foreach($table as $user => $users){
@@ -724,6 +726,182 @@ foreach($table as $user => $users){
     }
 }
 
+
+/******************************************************
+JOUR 3/9
+-- Les Bases :
+    - correction exercice foreach
+    - les array multidimensionnels
+    - les inclusions de fichiers
+    - le gestion des date_sub
+
+-- les superglobales :
+    - $_GET
+    - $_POST
+    - $_COOKIE
+*******************************************************/
+
+
+//--------------------------------------
+echo "<h2>Array multidimensionnels</h2>";
+//--------------------------------------
+// nous parlons de tableau multidimensionnels quand un tableau est contenu dans un autre tableau. chauque tablau représente un dimension.
+
+// création d'un array multidimensionnels :
+$tab_multi = array(
+    0 => array(
+        'prenom' => 'Julien',
+        'nom' => 'Dupon',
+        'tel' => '0606060606'
+    ),
+    1 => array(
+        'prenom' => 'Nicolas',
+        'nom' => 'Duran',
+        'tel' => '01234656789'
+    ),
+    2 => array(
+        'prenom' => 'Pierre',
+        'nom' => 'Dulac',
+    )
+);
+// il est possible de choisir le nom des indices dans cet array multidimensionnels
+
+// debug($tab_multi); // I did a function debug in the top
+echo "<pre>";
+print_r($tab_multi);
+echo "<pre>";
+
+// Accéder à la valeur "Julien" dans cet array multidimensionnels
+echo $tab_multi[0]['prenom'] . '<br>'; // affiche Julien. nous entrons d'abord à à l'indice 0 de $tab_multi, pour ensuite aller à l'indice ['prenom']dans le sous tableau.
+
+//Parcourir le tableaumultidimensionnel avec une boucle for :
+// Possible car les indices sont numériques.
+
+
+echo '<hr>';
+for($i = 0; $i < count($tab_multi); $i++){
+    echo $tab_multi[$i]['prenom'] . '<br>';
+}
+echo '<hr>';
+
+// Exercice : afficher les 3 prénom avec une boucle foreach
+foreach($tab_multi as $user){
+ echo $user['prenom'] . '<br>';
+}
+echo '<hr>';
+
+echo '<p style="font-weight: bold; font-size: 1.5em">foreach in foreach</p>';
+//--------------------
+//foreach in foreach
+//--------------------
+// Exercice : afficher TOUTES les valeurs de l'array $tab_multi
+foreach($tab_multi as $sous_tableau){
+    //debug($user);
+    foreach($sous_tableau as $user_info){ // $sous_tableau étant lui même un array, on le parcourt aussi avec une foreach
+        //debug($details);
+        echo $user_info . '<br>'; // $user_info correspond aux valeurs de $sous_tableau 
+    }
+    echo '<hr>';
+}
+echo '<hr>';
+
+echo '<p style="font-weight: bold; font-size: 1.5em">for in foreach</p>';
+
+for($i = 0; $i < count($tab_multi); $i++){
+    // debug($i);
+    foreach($tab_multi[$i] as $details){
+        echo $details . '<br>';
+    }
+    echo '<hr>';
+}
+
+// just to be sure about table with foreach and how it work
+$table = array(
+        'prenom' => 'Julien',
+        'nom' => 'Dupon',
+        'tel' => '0606060606'
+);
+// £table is the name of array....$key is the index......$value is the value of the index
+foreach($table as $key => $value){
+    echo $key .' : ' . $value . '<br>';
+}
+
+// ------------------------------------------
+echo "<h2>Inclusion de fichiers</h2>";
+// ------------------------------------------
+
+echo 'Première inclusion :';
+include 'exemple.inc.php'; // Le fichier dont le chemin est spécifié est inclus ici. en cas d'errer lors de l'inclusion de fichier, include génère une erreur  de type warning et continue l'exécution de script
+echo '<br><br>';
+
+echo 'Deuxième inclusion :';
+include_once 'exemple.inc.php'; // le once vérifie si le fichier a déjè été inclus. si c'est le cas, il ne le ré-inclut pas.
+echo '<br><br>';
+
+echo 'Troisième inclusion :';
+require 'exemple.inc.php'; // le fichier est "requis" donc obligatoire : en cas d'erreur lors de i'inclusion de fichier, require génère une erreur de type "fatal error" et stoppe l'exécution de script
+echo '<br><br>';
+
+echo 'Quatrième inclusion :';
+require_once 'exemple.inc.php'; // le once vérifie si le fichier a déjè été inclus. si c'est le cas, il ne le ré-inclut pas.
+echo '<br><br>';
+
+
+// le "inc" dans le nom de fichier inclus est indicatif pour préciser aux développeur qu'il s'agit d'un fichier d'inclusion, et donc pas d'une page à part entière. ce n'est pas obligatoire mais utile
+
+//-------------------------------------
+echo "<h2>Gestion des dates</h2>";
+// ------------------------------------
+
+echo date('d/m/Y H:i:s') . '<br>'; // date() return la date de maintenant selon le formet indiqué. d pour JOUR, m pour MOIS, Y pour anné sur 4 chiffres, y pour anné sur 2 chiffres, H pour hour sur 24h, h pour hours 12h, i pour minutes et s pour second.
+/**
+
+* date() retourne la date de maintenant selon le format indiqué
+
+* => d day,
+
+* => m month,
+
+* => Y year sur 4 chiffres, y sur 2 chiffres,
+
+* => H hour s/ 24h, h s/ 12h,
+
+* => i mInute, 'm' est réservé à 'month' donc le 'i' est la 2ème lettre de minute
+
+* => s second
+
+*/
+
+echo date('Y-m-d') . '<br>'; // on peut changer l'order des paramètres ainsi que le séparateur
+
+//--------------
+// le timestamp :
+// le timestemp est le nombre de seconds écoulées entre une certaine date et le 1er janvier 1970 à 00:00:00 . cette date correspond à la création de système unix. 
+// ce système de timestemp est utilisé par de nombreux language de progrem JS et PHP.
+
+//--------
+echo time(). '<br>'; // retourne hour actualle en timestamp
+
+//----------
+// changer le format d'une date (méthode procédurale) :
+    $dateJour = strtotime('27-09-2018'); // transforme la date exprimée en string en timestamp
+echo $dateJour . '<br>'; // affiche le timestamp de jour
+
+var_dump(strtotime('13-13-2018')); // ici retournr false car la date fournie n'est pas valide. cette fonction permet donc de valider un date.
+
+$dateFormet = strftime('%Y-%m-%d', $dateJour); // transforme une date donnée en timestamp selon le format indiqué, ici en anné-mois-jour
+echo $dateFormet . '<br>';
+
+//----------
+// changer le format d'une date (méthode procédurale) :
+$date = new DateTime('11-04-2017'); // $date est un objet date qui représente le 11-04-2017
+
+echo $date->format('Y-m-d') . '<br>'; // on peut formater cet obfet date en appelant sa méthode formet() et en lui indiquant les paramètres de formet, ici 'y-m-d'. affiche '2017-09-27'
+
+// -------------------------------------- if it change time and date aotomatic
+echo "Today is " . date("Y/m/d H:i:s") . "<br>";
+echo "Today is " . date("l");
+// ----------------------------------------------------------------------------
 
 
 
