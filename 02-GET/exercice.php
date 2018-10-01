@@ -12,10 +12,18 @@
     
     echo '<p>Prenom : Jaun <br> nom : Doe </p>';
 
-    echo '<a href="exercice.php?article=sms"> Modification Mon Profile </a>';
+    echo '<a href="exercice.php?action=sms"> Modification Mon Profile </a>';
+    echo '<a href="exercice.php?action=supprimer"> supprimer Mon Profile </a>';
 
-    if(isset($_GET['article'])){
+echo '<pre>';
+var_dump($_GET);
+echo '</pre>';
+
+    if(isset($_GET['action']) && $_GET['action'] == 'sms' ){
 
         echo '<p> you page had changed</p>';
+
+    } else {
+         echo '<p> wrong page</p>';
 
     }
