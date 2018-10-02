@@ -58,7 +58,12 @@ echo '<br>';
 $a = true; // ou false
 echo gettype($a); // affiche boolean
 
-// par convention, un nom de variable commence par une lettre minuscule, puis on met une majuscule à ahaque mot. il peut contenir des chiffres (jamais au debut), ou un "_"(jamais au début car signipication particular en object, ni à la fin).
+/* par convention un nom de variable :
+    - commence par une lettre minuscule,
+    - puis on met une majuscule à chaque mot (camel case)
+    - il peut contenir des chiffres (jamais au début)
+    - il peut contenir un "_" (jamais au début car cela a une signification particulière en objet, et jamais à la fin non plus)
+*/
 
 //-------------------------------
 echo '<h2>concaténation</h2>';

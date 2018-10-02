@@ -6,7 +6,7 @@
 /*
 un fichier temporaire appelé session est crée sur le serveur avec un identifiant unique. cette session est liée à un seul internaute car, dans le même temp, un cookie est déposé sur son poste avec l'inentfiant à l'intérieur (au nom PHPSESSID). ce cookie se détruit lorsque'on quitte la navigateur.
 
-Le fivhier de session peut contenir toutes sortes d'information y compris sensible car il n'est pas accessible ni modifiable par l'internaute. On peut donc y mettre des login, mdp, panier d'acchat avant paiement...
+Le fichier de session peut contenir toutes sortes d'information y compris sensible car il n'est pas accessible ni modifiable par l'internaute. On peut donc y mettre des login, mdp, panier d'acchat avant paiement...
 
 Si l'internaute tente de modifier ce cookie, le lien avec la session est rompu automatiquement et donc l'internaute est déconnecté.
 
@@ -37,3 +37,4 @@ print_r($_SESSION);
 echo '<br> 3- La session après session-destroy() : ';
 print_r($_SESSION); // on voit encore notre session, car la fin du scipt se situ après ces lignes. Cependant si on rgarde dans le dossier tmp, la session est bien supprimée (à la fin du script).
 
+?>
