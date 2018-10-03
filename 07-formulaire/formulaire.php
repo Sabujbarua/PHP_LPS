@@ -43,8 +43,52 @@ if($_POST){ // écriture simplifiée => if(!empty($_POST)) - grâce aux valeurs 
         // is_int() recherche un chiffre alors qu'en BDD on récupère un chiffre mais entre quotes donc un string !!
 
 
+        // -------------------------
+        // si la variable $message est vide, c'est que le formulaire est valude : on peut enregistrer en BDD: 
+        if (empty($message)){
+
+            // on échappe toutes les valeurs de $_post :
+            foreach ($_POST as $indice => $valeur){
+                $_post[$indice] = htmlentities($valeur, ENT_QUOTES); // on prend la valeur que l'on traite avec htmlspecialchaea() puis que l'on range dans so emplacement initial qui est $_POST[$indice]
+            }
+
+
+
+            
+            // on reformate la date en yyyy-mm-dd
+            $date = new DateTime($_POST['date_embauche']); // on crée un objet date qui contient la date d'embauche à partir de la class DateTime.
+            $date_embauche = $date->format('Y-m-d'); // on utilise la méthode format() pour changer le format de la date
+            var_dump($date_embauche);
+            
+            // la requête préparée :
+            $resultat = $pdo->prepare("INSERT INTO employes (prenom, nom, sexe, service, date_embauche, salaire) VALUES (:prenom, :nom, :sexe, :service, :date_embauche, :salaire)");
+            
+            $resultat->bindparam(':prenom', $_POST['prenom']);
+            $resultat->bindparam(':nom', $_POST['nom']);
+            $resultat->bindparam(':sexe', $_POST['sexe']);
+            $resultat->bindparam(':service', $_POST['service']);
+            $resultat->bindparam(':date_embauche', $_POST['date_embauche']);
+            $resultat->bindparam(':salaire', $_POST['salaire']);
+            
+            $req = $resultat->execute(); // $req est un booléen : true en cas de succès de la requête, sinon false en cas d'échec
+            
+            // message de réussite ou d'échec de l'enregistrement
+            
+            if($req){
+                $prompt_msg = $message.= '<p style="background: lightgreen;">' . 'L\'employé a bien ajouté' . '</p>';
+            } else {
+                $message.= '<p style="background: red;">Erreur lors de l\'enregistrement' . '</p>';
+            }
+        } // fin de if (empty($message))
+
 
 } // fin de la  if($_POST)
+
+
+
+
+
+
 
 /**
  * CULTURE de programmeur => Les valeurs implicites
@@ -62,7 +106,6 @@ if($_POST){ // écriture simplifiée => if(!empty($_POST)) - grâce aux valeurs 
  * array('azerty', 1, 'fghjk') est interprété => TRUE
  * 
  */
-
 
 echo $message;
 ?>
@@ -85,7 +128,7 @@ echo $message;
     <input type="text" id="service" name="service" value="<?php echo $_POST['service'] ?? ''; ?>"> <br>
     
     <label for="date_embauche">Date d'embauche</label> <br>
-    <input type="text" id="date_embauche" name="date_embauche" value="<?php echo $_POST['date_embauche'] ?? ''; ?>"> <br>
+    <input type="text" id="date_embauche" name="date_embauche" placeholder="jj-mm-yyyy" value="<?php echo $_POST['date_embauche'] ?? ''; ?>"> <br>
 
     <label for="salaire">Salaire</label> <br>
     <input type="text" id="salaire" name="salaire" value="<?php echo $_POST['salaire'] ?? ''; ?>"> <br>
