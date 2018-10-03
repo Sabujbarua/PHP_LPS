@@ -130,10 +130,10 @@ debug($employe);
 echo $employe[1] . '<br>'; // on passe par l'indice numérique 1 pour afficher le prenom
 
 $result = $pdo->query("SELECT * FROM employes WHERE prenom ='daniel'");
-$employe = $result->fetch(); // transformer l'objet $result en un ARRAY associatif et numérique
+$employe = $result->fetch(); // transformer l'objet $result en un ARRAY associatif et numérique.
 debug($employe);
 echo $employe['prenom'] . '<br>';
-echo $employe[1] . '<br>';
+echo $employe[1] . '<br>';  // On passe par l'indice numérique pour afficher le prénom
 
 $result = $pdo->query("SELECT * FROM employes WHERE prenom ='daniel'");
 $employe = $result->fetch(PDO::FETCH_OBJ); //transformer l'objet $result en un autre OBJET stdClass dans lequel on accéde aux information de Daniel Chevel : les propriétés de cet objet correspondent aux champs de la requête SQL
@@ -141,7 +141,7 @@ debug($employe);
 echo $employe->prenom . '<br>';
 echo '<br>';
 
-// NOTE : on répète la requête SQL avant chaque fetch(), car on ne peut pas réaliser PLUSIEURS fetch() sur le même ,résultat. 
+// NOTE : on répète la requête SQL avant chaque fetch(), car on ne peut pas réaliser PLUSIEURS fetch() sur le même, résultat. 
 
 // exercice : afficher le service de l'employé dont l'id employes est 417
 $result = $pdo->query("SELECT service FROM employes WHERE id_employes = 417");
@@ -154,7 +154,7 @@ echo " le service de l'employé 417 est :  <strong> $employe[service] </strong> 
 echo '<h3> 04 - la méthode query() et boucle while </h3>';
 // --------------------------------------------------------------
 
-// Quand on est certain d'avoir qu'un résulta dans  notre requête : pas de boucle. si on peut avoir potentiellement plusieurs : on fait un loop
+// Quand on est certain d'avoir qu'un résulta dans  notre requête : pas de boucle. si on peut avoir potentiellement plusieurs : on fait un loop.
 
 $resultat = $pdo->query("SELECT * FROM employes");
 echo "nombre d'employes dans l'intreprise : " . $resultat->rowCount() . '<br>';
@@ -162,9 +162,8 @@ echo "nombre d'employes dans l'intreprise : " . $resultat->rowCount() . '<br>';
 
 // $employe = $resultat->fetch(PDO::FETCT_ASSOC);
 
-while($employe = $resultat->fetch(PDO::FETCH_ASSOC)){ //fetch() retourne la ligne suivante de jeu de résultat en un array associatif. la loop while permet de faire avance le curse ***
-    // debug($employe); 
-    // $employe est un array associatif qui contient les données d'une ligne de jeu de résultat contenu dans $resultat pour chaque tour de loop
+while($employe = $resultat->fetch(PDO::FETCH_ASSOC)){ //fetch() retourne la ligne suivante de jeu de résultat en un array associatif. la loop while permet de faire avance le curseur dans le jeu de résultat et s'arrête quand le curseur est à la fin des résultat/.
+    // debug($employe); // $employe est un array associatif qui contient les données d'une ligne de jeu de résultat contenu dans $resultat pour chaque tour de loop
     
     echo '<div>';
         echo '<p>' . $employe['id_employes'] . '</p>';
@@ -173,13 +172,13 @@ while($employe = $resultat->fetch(PDO::FETCH_ASSOC)){ //fetch() retourne la lign
     echo '<div> <hr>';
     $employe++;
 }
-// conclusion: on fait une loop si on a potentiellement plusieurs résultats
+// conclusion: on fait une loop si on a potentiellement plusieurs résultats.
 
 // --------------------------------------------------------------
 echo '<h3> 05 - la méthode fetchAll()</h3>';
 // --------------------------------------------------------------
 $resultat = $pdo->query("SELECT * FROM employes");
-$donnees = $resultat->fetchAll(PDO::FETCH_ASSOC); // retourne toutes les ligne de résultats dans un tableau multidimensionnel : on a 1 sous-array associatif à chaque indicés numérique de donnees___
+$donnees = $resultat->fetchAll(PDO::FETCH_ASSOC); // retourne toutes les ligne de résultats dans un tableau multidimensionnel : on a 1 sous-array associatif à chaque indicés numérique de donnees. On peut mettre aussi FETCH8NUM pour des sous-array indicé numériquement ou fetchALL() vide pour des sous-array numérique et associatifs.
 debug($donnees);
 
 // on parcort $donnees avec une loop foreach pour en afficher le contenu :
@@ -277,7 +276,7 @@ $resultat->bindParam(':nom', $nom); // bindParam() recoit exclusivement une VARI
 $resultat->execute();
 
 // puis on fait un fetch sur $resultat pour obtenir le jeu de résultat qu'il contient :
-$donnees = $resultat->fetch(PDO::FETCH_ASSOC); // pas de while car il n'y a qu'un seul résultat
+$donnees = $resultat->fetch(PDO::FETCH_ASSOC); // pas de while car il n'y a qu'un seul résultat.
 debug($donnees);
 
 // $nom = 'Chevel';
@@ -343,12 +342,12 @@ echo '<h4> le Marqueur "?" </h4>';
 $resultat = $pdo->prepare("SELECT * FROM employes WHERE nom = ? AND prenom = ? ");
 // on prépar la requête avec les parties variable représente par des marqueurs sous form de "?"
 
-$resultat->bindValue(1, 'durand');
-$resultat->bindValue(2, 'damien');
+$resultat->bindValue(1, 'durand'); // le chiffre 1 représente le premier marqueur "?" de la requête
+$resultat->bindValue(2, 'damien'); // le chiffre 2 représente le second marqueur "?" de la requête
 $resultat->execute();
 
 //on peut aussi utiliser cette sytaxe directement :
-$resultat->execute(array('durand', 'damien')); // on peut remplacer les 2 bindValue et le execute() préce****
+$resultat->execute(array('durand', 'damien')); // on peut remplacer les 2 bindValue et le execute() précédent par cette ligne, en passant un array à la méthode execute(). Les valeurs sont dans le même ordre que les marqueursdans la requête
 
 $donnees = $resultat->fetch(PDO::FETCH_ASSOC);
 debug($donnees);
@@ -357,7 +356,7 @@ echo '<h4> execute() sans bindParam() ni bindValue() </h4>';
 
 $resultat = $pdo->prepare("SELECT * FROM employes WHERE nom = :nom AND prenom = :prenom");
 
-$resultat->execute(array(':nom'=>'chevel', 'prenom'=>'daniel')); //
+$resultat->execute(array(':nom'=>'chevel', 'prenom'=>'daniel')); // on associe les mlarqueurs à leur valeur directement dans un array passé à la méthode execute()
 
 $donnees = $resultat->fetch(PDO::FETCH_ASSOC);
 debug($donnees);
@@ -375,35 +374,9 @@ $resultat = $mysqli->query("SELECT * FROM employes");
 debug($resultat);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//--------------------- FIN DU FICHIER ----------------------------------
 ?>
 
-=======
-/**
- * Résumé des 4 étapes principales pour afficher "Daniel Chevel" :
- *  1- connexion à la BDD
- *  2- requête : on obtient un objet PDOStatement
- *  3- on fait un fetch sur cet objet pour le transformer (en objet, en array ...) ici en array avec un FETCH_ASSOC
- *  4- on affiche le résultat final
- */
-
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
