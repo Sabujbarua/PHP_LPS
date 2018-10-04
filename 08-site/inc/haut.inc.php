@@ -22,7 +22,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
         <!-- La marque -->
-       
+        <a class="navbar-brand" href="<?php echo RACINE_SITE . 'boutique.php'; ?>">MA BOUTIQUE</a>
        
         <!-- Le burger -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav1" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,27 @@
         <div class="collapse navbar-collapse" id="nav1">
         	<ul class="navbar-nav ml-auto">
           <?php
-					
+          echo '<li><a class="nav-link" href="'. RACINE_SITE .'boutique.php">Boutique</a></li>';
+          // menu de l'internaute connecté :
+          if(internauteEstConnecte()){
+            echo '<li><a class="nav-link" href="'. RACINE_SITE .'boutique.php">Profil</a></li>';
+            echo '<li><a class="nav-link" href="'. RACINE_SITE .'connexion.php?action=deconnexion">Se déconnecter</a></li>';
+          } else {
+            // l'internaute non connecté :
+            echo '<li><a class="nav-link" href="'. RACINE_SITE .'inscription.php">inscription</a></li>';
+            echo '<li><a class="nav-link" href="'. RACINE_SITE .'connexion.php">Connexion</a></li>';
+          }
+          echo '<li><a class="nav-link" href="'. RACINE_SITE .'panier.php">Panier</a></li>';
+
+          // menu de l'administrateur :
+          if(internauteEstConnecteEtAdmin()){
+            echo '<li><a class="nav-link" href="'. RACINE_SITE .'admin/gestion_boutique.php">Gestion de la boutique</a></li>';
+          }
+          
+
+
+
+
 				  ?>
         	</ul>
         </div>
@@ -43,4 +63,12 @@
 
    
     <!-- Page Content -->
+    <div class="container" style="min-height: 80vh;">
+          <div class="row">
+            <div class="col-12">
+            <!-- ici le contenu spécifique de chaque page -->
+
+
+
+
     

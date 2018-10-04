@@ -284,6 +284,40 @@ echo "</select>";
 
 
 
+//------------------------------------------
+echo '<h2>Fonction Utilisateur</h2>';
+//------------------------------------------
+var_dump($_POST);
+
+
+?>
+
+<form method="post" action="">
+
+   <label for="prenom">Prenom</label> <br>
+   <input type="text" id="prenom" name="prenom" value="<?php echo $_POST['prenom'] ?? ''; ?>"> <br>    
+   
+   <label for="nom">Nom</label> <br>
+   <input type="text" id="nom" name="nom" value="<?php echo $_POST['nom'] ?? ''; ?>"> <br>    
+   
+   <label for="">Sexe</label> <br>
+   <input type="radio" name="sexe" value="m" checked>Homme <br>
+   <input type="radio" name="sexe" value="f" <?php if(isset($_POST['sexe']) && $_POST['sexe'] == 'f') echo 'checked'; ?>>Femme <br>   
+   
+    <label for="service">Service</label> <br>
+   <input type="text" id="service" name="service" value="<?php echo $_POST['service'] ?? ''; ?>"> <br>    
+   
+   <label for="date_embauche">Date D'embauche</label> <br>
+   <input type="text" id="date_embauche" name="date_embauche" value="<?php echo $_POST['date_embauche'] ?? ''; ?>"> <br>   
+   
+    <label for="salaire">Salaire</label> <br>
+   <input type="text" id="salaire" name="salaire" value="<?php echo $_POST['salaire'] ?? ''; ?>"> <br>    
+
+   <input type="submit" value="enregistrer">
+</form>
+
+
+
 
 
 

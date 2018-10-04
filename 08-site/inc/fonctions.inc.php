@@ -27,3 +27,22 @@ function internauteEstConnecteEtAdmin(){
         return false;
     }
 }
+
+
+// -------------------FONCTION DE REQUETE-------------------
+// $membre = executeRequete("SELECT * FROM membre WHERE pseudo = :pseudo", array(':pseudo'=>$_POST['pseudo']));
+
+function executeRequete($requete, $param = array()){
+    if(!empty($param)) { // si j'ai bien reçu un array rempli, je peux faire la foreach dessus pour transformer les cractères spéciaux en entités HTML :
+        foreach($param as $indice => $valeur){
+            $param[$indice] = htmlspecialchars($valeur, ENT_QUOTES); // pour éviter les injection css et JS
+        }
+    }
+    
+    global $pdo; // permet d'avoir accès à la variable $pdo définie dans l'espace global(à l'extérieur de la function)
+    $resultat = $pdo->prepare($requete); // ici on prepare la requete fournie lors de l'apple la function
+    $resultat->execute($param); // on execute en liant les marqueurs aux valeurs qui se trouvent dans l'array$param fourni lors de l'appel de la fonction  
+
+    return $resultat; // on  retourne l'objet pdo statement à l'endroit ou la fonction executeRequete est appelée.
+
+}
