@@ -37,7 +37,7 @@
           echo '<li><a class="nav-link" href="'. RACINE_SITE .'boutique.php">Boutique</a></li>';
           // menu de l'internaute connecté :
           if(internauteEstConnecte()){
-            echo '<li><a class="nav-link" href="'. RACINE_SITE .'boutique.php">Profil</a></li>';
+            echo '<li><a class="nav-link" href="'. RACINE_SITE .'profil.php">Profil</a></li>';
             echo '<li><a class="nav-link" href="'. RACINE_SITE .'connexion.php?action=deconnexion">Se déconnecter</a></li>';
           } else {
             // l'internaute non connecté :

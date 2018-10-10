@@ -6,7 +6,7 @@ require_once 'inc/init.inc.php';
 
 // 2- Si membre NON connecté, alors on le redirige vers la page de connexion : il n'a pas le doit d'accéder à son profil
 
-if (internauteEstConnecte()){
+if (!internauteEstConnecte()){
     header('location:connexion.php');
     exit();
 }
