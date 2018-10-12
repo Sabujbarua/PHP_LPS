@@ -69,12 +69,12 @@ if($_POST){
 		// $prepare_requete is an object and PDOStatement
 		$prepare_requete = $pdo->prepare("INSERT INTO contact (nom, prenom, telephone, annee_rencontre, email, type_contact) VALUES (:nom, :prenom, :telephone, :annee_rencontre, :email, :type_contact)");
 
-		$prepare_requete->bindparam(':nom', $_POST['nom']);
-		$prepare_requete->bindparam(':prenom', $_POST['prenom']);
-		$prepare_requete->bindparam(':telephone', $_POST['telephone']);
-		$prepare_requete->bindparam(':annee_rencontre', $_POST['annee_rencontre']);
-		$prepare_requete->bindparam(':email', $_POST['email']);
-		$prepare_requete->bindparam(':type_contact', $_POST['type_contact']);
+		$prepare_requete->bindParam(':nom', $_POST['nom']);
+		$prepare_requete->bindParam(':prenom', $_POST['prenom']);
+		$prepare_requete->bindParam(':telephone', $_POST['telephone']);
+		$prepare_requete->bindParam(':annee_rencontre', $_POST['annee_rencontre']);
+		$prepare_requete->bindParam(':email', $_POST['email']);
+		$prepare_requete->bindParam(':type_contact', $_POST['type_contact']);
 
 		// $result ce un boolen = il savoir si le requete il a bien
 		$result = $prepare_requete->execute();
